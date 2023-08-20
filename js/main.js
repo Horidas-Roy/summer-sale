@@ -47,16 +47,11 @@ function handleClick(data){
 
 
 let couponApply=()=>{
-    document.getElementById('coupon-apply').addEventListener('click', function(){
 
         let couponCode=document.getElementById('coupon-code')
 
-        if(couponCode.value !== "SELL200"){
-            alert("Invalid Coupon Code!");
-            return;
-        }
-        else{
-            document.getElementById('coupon-apply').addEventListener('click',function(){
+        if(couponCode.value === "SELL200"){
+           document.getElementById('coupon-apply').addEventListener('click',function(){
                 const mainPrizeStr=document.getElementById('total-prize').innerText
                 const mainPrize=parseFloat(mainPrizeStr)
                 
@@ -75,10 +70,12 @@ let couponApply=()=>{
                 let payablePrizeElement=document.getElementById('payable-prize')
                 payablePrizeElement.innerText=discountPrize.toFixed(2);
                
+                couponCode.value=''
            })
         }
-    
-    })
+        else{
+             alert("Invalid Coupon Code!");
+        }
     
 }
 
@@ -98,6 +95,9 @@ let makePurchase=()=>{
 
         let purchaseContainer=document.getElementById('purchase-container');
         purchaseContainer.innerHTML=""
+
+        // window.location.href="./index.html"
+        
     })
 }
 makePurchase();
