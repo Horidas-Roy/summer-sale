@@ -16,14 +16,27 @@ function handleClick(data){
     
     // update total prize
     previousTotalPrize.innerHTML=currentTotalPrize;
+
+    const currentPayablePrize=document.getElementById('payable-prize');
+    currentPayablePrize.innerHTML=currentTotalPrize;
     
+    //purchase validition
+    if(parseFloat(currentTotalPrize) > 0){
+        document.getElementById('make-purchase').removeAttribute('disabled');
+        const purchaseBtn =document.getElementById('make-purchase');
+        purchaseBtn.style.backgroundColor="#E527B2";
+    }
+    else{
+        document.getElementById('make-purchase').setAttribute('disabled',true);
+
+    }
+    
+    //coupon validition
     if(parseFloat(currentTotalPrize) >= 200){
         document.getElementById('coupon-apply').removeAttribute('disabled')
 
         const button =document.getElementById('coupon-apply')
         button.style.backgroundColor="#E527B2"
-        
-        
     }
     else{
         document.getElementById('coupon-apply').setAttribute('disabled',true)
@@ -34,34 +47,41 @@ function handleClick(data){
 
 
 let couponApply=()=>{
-    let couponCode=document.getElementById('coupon-code')
-    if(couponCode.value !== "SELL200"){
-        alert("Invalid Coupon Code!");
-        return;
-    }
-    else{
-        document.getElementById('coupon-apply').addEventListener('click',function(){
-            const mainPrizeStr=document.getElementById('total-prize').innerText
-            const mainPrize=parseFloat(mainPrizeStr)
-            
-            console.log(mainPrize)
-            const discount=(mainPrize*0.2).toFixed(2);
-            //previoust discount status
-            let discountStr=document.getElementById("discount")
-            let totalDiscount=parseFloat(discountStr.innerText)
-            console.log(totalDiscount)
+    document.getElementById('coupon-apply').addEventListener('click', function(){
+
+        let couponCode=document.getElementById('coupon-code')
+
+        if(couponCode.value !== "SELL200"){
+            alert("Invalid Coupon Code!");
+            return;
+        }
+        else{
+            document.getElementById('coupon-apply').addEventListener('click',function(){
+                const mainPrizeStr=document.getElementById('total-prize').innerText
+                const mainPrize=parseFloat(mainPrizeStr)
+                
+                console.log(mainPrize)
+                const discount=(mainPrize*0.2).toFixed(2);
+                //previoust discount status
+                let discountStr=document.getElementById("discount")
+                let totalDiscount=parseFloat(discountStr.innerText)
+                console.log(totalDiscount)
+        
+                let currentTotalDiscount=parseFloat(discount)
+                discountStr.innerText=currentTotalDiscount.toFixed(2);
+        
+                const discountPrize=mainPrize*0.8;
+        
+                let payablePrizeElement=document.getElementById('payable-prize')
+                payablePrizeElement.innerText=discountPrize.toFixed(2);
+               
+           })
+        }
     
-            let currentTotalDiscount=parseFloat(discount)
-            discountStr.innerText=currentTotalDiscount.toFixed(2);
+    })
     
-            const discountPrize=mainPrize*0.8;
-    
-            let payablePrizeElement=document.getElementById('payable-prize')
-            payablePrizeElement.innerText=discountPrize.toFixed(2);
-           
-       })
-    }
 }
+
 
 
 let makePurchase=()=>{
@@ -75,6 +95,9 @@ let makePurchase=()=>{
 
         let payablePrizeElement=document.getElementById('payable-prize');
         payablePrizeElement.innerHTML='00.00';
+
+        let purchaseContainer=document.getElementById('purchase-container');
+        purchaseContainer.innerHTML=""
     })
 }
 makePurchase();
