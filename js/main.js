@@ -97,6 +97,14 @@ let makePurchase=()=>{
         purchaseContainer.innerHTML=""
 
         // window.location.href="./index.html"
+        document.getElementById('coupon-apply').setAttribute('disabled',true);
+        const button =document.getElementById('coupon-apply')
+        button.style.backgroundColor="#bc6ea7"
+
+        document.getElementById('make-purchase').setAttribute('disabled',true);
+        const purchaseBtn =document.getElementById('make-purchase');
+        purchaseBtn.style.backgroundColor="#bc6ea7";
+
         
     })
 }
